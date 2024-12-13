@@ -4,24 +4,23 @@
 Clonar o projeto
 
 ```bash
-  git clone https://github.com/guilhermeplpf/FastAPI-Workshop.git
+  git clone https://github.com/Ecossistema-Conecta/WorkshopFastAPI
 ```
 
-Go to the project directory
+Acesse o diretório do projeto
 
 ```bash
-  cd my-project
+  cd WorkshopFastAPI
 ```
 
-Install dependencies
+Instale as dependências
 
 ```bash
-  npm install
+  docker compose build
 ```
 
-Start the server
+Suba o projeto
 
 ```bash
-  npm run start
+  docker compose up -d
 ```
-
