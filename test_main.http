@@ -9,3 +9,37 @@ GET http://127.0.0.1:8000/hello/User
 Accept: application/json
 
 ###
+
+POST http://localhost:8000/heroes/
+Content-Type: application/json
+
+{
+  "name": "O Miranha",
+  "universe": "Vila Abobrinha",
+  "real_identity": "Super Cebolão",
+  "power_level": 8000
+}
+
+###
+
+GET http://localhost:8000/heroes/1
+Content-Type: application/json
+
+###
+
+GET http://localhost:8000/heroes/
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8000/heroes/1
+Content-Type: application/json
+
+{
+  "name": "Chaves"
+}
+
+###
+
+DELETE http://localhost:8000/heroes/2
+Content-Type: application/json
