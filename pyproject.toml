@@ -12,6 +12,16 @@ uvicorn = "^0.32.1"
 sqlalchemy = "^2.0.36"
 
 
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.8"
+mkdocstrings = {extras = ["python"], version = "^0.29.0"}
+mkdocs-gen-files = "^0.5.0"
+
+
+[tool.poetry.group.database.dependencies]
+alembic = "^1.15.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
