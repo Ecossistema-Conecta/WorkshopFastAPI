@@ -1,5 +1,16 @@
 from pydantic import BaseModel
 
+class UserSchema(BaseModel):
+    #id: int
+    username: str
+    password: str
+    is_leader: bool = False
+    
+class UserSchemaResponse(BaseModel):
+    id: int
+    username: str
+    is_leader: bool
+
 
 class SuperHeroSchema(BaseModel):
     name: str

@@ -1,10 +1,17 @@
-from sqlalchemy import Column, Integer, String, UniqueConstraint, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, UniqueConstraint, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship
 
 
 class ModelBase(DeclarativeBase):
     pass
 
+class User(ModelBase):
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True)
+    username = Column(String, unique=True)
+    password = Column(String, nullable=False)
+    is_leader = Column(Boolean, default=False, nullable=False)
 
 class TeamHero(ModelBase):
     __tablename__ = "team_heroes"
