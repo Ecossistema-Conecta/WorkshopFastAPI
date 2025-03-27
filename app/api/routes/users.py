@@ -10,7 +10,26 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.post("/", response_model=UserSchemaResponse, status_code=201)
 async def create_user(data: UserSchema, db=Depends(get_session)):
-    """Crie-me"""
+    """Cria um novo usuário.
+    
+    ### Parâmetros:
+    - **username**: Nome de usuário a ser criado.
+    - **password**: Senha do usuário.
+    
+    ### Retorno:
+    - **[UserSchemaResponse](../../../schemas/#app.schemas.UserSchemaResponse)**: Dados do usuário criado.
+
+    ### Exceções:
+    - **400**: Se um usuário com o mesmo nome já existir.
+    
+    ### Exemplo de JSON de Entrada:
+    ```json
+        {
+            "username": "johndoe",
+            "password": "securepassword"
+        }
+    ```    
+    """
     existing_user = db.query(User).filter(data.username == data.username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Usuário já existe")

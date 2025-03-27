@@ -1,12 +1,16 @@
 from pydantic import BaseModel
 
 class UserSchema(BaseModel):
-    #id: int
     username: str
     password: str
-    is_leader: bool = False
     
 class UserSchemaResponse(BaseModel):
+    """Schema de resposta para o usuário.
+    ### Campos:
+    - **id**: ID do usuário.
+    - **username**: Nome de usuário.
+    - **is_leader**: Indica se o usuário é líder.
+    """
     id: int
     username: str
     is_leader: bool
