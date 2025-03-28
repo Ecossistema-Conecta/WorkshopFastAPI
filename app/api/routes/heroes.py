@@ -89,24 +89,24 @@ async def get_all_heroes(db=Depends(get_session)):
     - **List[SuperHeroSchemaResponse]**: Lista de super-heróis.
     
     ### Exemplo de JSON de Retorno:
-        ```json
-            [
-                {
-                    "real_identity": "Carlos Quente",
-                    "id": 1,
-                    "name": "Superman",
-                    "universe": "DC",
-                    "power_level": 9999
-                },
-                {
-                    "real_identity": "Bruno Jânio",
-                    "id": 2,
-                    "name": "Batman",
-                    "universe": "DC",
-                    "power_level": 9999
-                }
-            ]
-        ```
+    ```json
+        [
+            {
+                "real_identity": "Carlos Quente",
+                "id": 1,
+                "name": "Superman",
+                "universe": "DC",
+                "power_level": 9999
+            },
+            {
+                "real_identity": "Bruno Jânio",
+                "id": 2,
+                "name": "Batman",
+                "universe": "DC",
+                "power_level": 9999
+            }
+        ]
+    ```
     """
     heroes = db.query(SuperHero).all()
 
@@ -121,12 +121,12 @@ async def get_hero(id: int, credentials: Optional[HTTPBasicCredentials] = Depend
     - **id**: ID do super-herói a ser obtido.
     
     ### Retorno:
-        - **ResponseForAny**: Dados básicos do super-herói.
-        - **ResponseForUserAuthenticated**: Dados do super-herói para usuários autenticados.
-        - **ResponseForLeader**: Dados do super-herói para líderes.
+    - **ResponseForAny**: Dados básicos do super-herói.
+    - **ResponseForUserAuthenticated**: Dados do super-herói para usuários autenticados.
+    - **ResponseForLeader**: Dados do super-herói para líderes.
     
     ### Exceções:
-        - **404**: Se o super-herói não for encontrado.
+    - **404**: Se o super-herói não for encontrado.
     """
     hero = db.query(SuperHero).filter(SuperHero.id == id).first()
     

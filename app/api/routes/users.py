@@ -104,11 +104,14 @@ async def login(credentials: HTTPBasicCredentials = Depends(security), db: Sessi
     """Autenticação básica com verificação de senha.
     
     ### Parâmetros:
-        - header: **Authorization**: Credenciais de autenticação no formato `Basic base64(username:password)`.
+    - header: **Authorization**: Credenciais de autenticação no formato.
+    - `Basic base64(username:password)`.
+    
     ### Retorno:
-        - **message**: Mensagem de boas-vindas ao usuário.
+    - **message**: Mensagem de boas-vindas ao usuário.
+    
     ### Exceções:
-        - **401**: Se as credenciais ou formatação estiverem incorretas.
+    - **401**: Se as credenciais ou formatação estiverem incorretas.
     """
     
     user = db.query(User).filter(User.username == credentials.username).first()

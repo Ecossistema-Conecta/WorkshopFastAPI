@@ -21,24 +21,24 @@ security = HTTPBasic()
 def create_team(team: TeamCreate, credentials: HTTPBasicCredentials = Depends(security), db: Session = Depends(get_session)):
     """Um usuário Líder pode criar um novo time de heróis.
 
-        ### Parâmetros:
-        - **team**: Dados do time a ser criado.
-        - **db**: Sessão do banco de dados.
-        
+    ### Parâmetros:
+    - **team**: Dados do time a ser criado.
+    - **db**: Sessão do banco de dados.
+    
 
-        ### Retorno:
-        - **TeamResponse**: Dados do time criado.
+    ### Retorno:
+    - **TeamResponse**: Dados do time criado.
 
-        ### Exceções:
-        - **400**: Se um time com o mesmo nome já existir.
+    ### Exceções:
+    - **400**: Se um time com o mesmo nome já existir.
 
-        ### Exemplo de JSON de Entrada:
-        ```json
-            {
-                "name": "Vingadores",
-                "hero_ids": [1, 2, 3]
-            }
-        ```
+    ### Exemplo de JSON de Entrada:
+    ```json
+        {
+            "name": "Vingadores",
+            "hero_ids": [1, 2, 3]
+        }
+    ```
     ## TODO: Corrigir falha de segurança relacionada as credenciais do usuário.
     ## OPTIONAL TODO: Corrigir falha de segurança, pois o usuário pode criar times com ids de heróis que não existem.
     """
