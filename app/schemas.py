@@ -4,6 +4,12 @@ class UserSchema(BaseModel):
     username: str
     password: str
     
+    
+class UserLeaderSchema(BaseModel):
+    username: str
+    password: str
+    is_leader: bool = True
+    
 class UserSchemaResponse(BaseModel):
     """Schema de resposta para o usuário.
     ### Campos:
@@ -36,6 +42,24 @@ class SuperHeroSchemaResponse(BaseModel):
     real_identity: str
 
 
+class SuperHeroSchemaResponseForAny(BaseModel):
+    name: str | None = None
+    universe: str
+
+
+class SuperHeroSchemaResponseForUserAuthenticated(BaseModel):
+    name: str | None = None
+    universe: str
+    power_level: int | None = None
+
+
+class SuperHeroSchemaResponseForLeader(BaseModel):
+    name: str | None = None
+    universe: str
+    real_identity: str | None = None
+    power_level: int | None = None
+    
+    
 class TeamCreate(BaseModel):
     name: str
     hero_ids: list[int]

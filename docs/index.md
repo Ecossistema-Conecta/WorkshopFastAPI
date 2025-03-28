@@ -1,17 +1,16 @@
-# Welcome to MkDocs
+# Workshop Autenticação Básica
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Em [get_all_heroes](Codebase/api/routes/heroes/#app.api.routes.heroes.get_all_heroes) temos o primeiro desafio.
+    
+#### TODO: Implementar autenticação e níveis de acesso para este endpoint.
+##
 
-## Commands
+Em [create_team](Codebase/api/routes/teams/#app.api.routes.teams.create_team) temos mais dois desafios.
+#### TODO: Corrigir falha de segurança relacionada as credenciais do usuário.
+#### OPTIONAL TODO: Corrigir falha de segurança, pois o usuário pode criar times com ids de heróis que não existem.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+##
 
-## Project layout
+Para criar **username:password** em **base64**:
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+[Base64 Encode and Decode - Online](https://www.base64encode.org/)
