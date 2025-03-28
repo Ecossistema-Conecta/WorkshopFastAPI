@@ -134,11 +134,11 @@ async def get_hero(id: int, credentials: Optional[HTTPBasicCredentials] = Depend
         raise HTTPException(status_code=404, detail="Hero not found")
 
     if credentials:
-        if not HashPassword.compair(credentials.password, user.password):
-            raise HTTPException(status_code=401, detail="Credenciais inválidas")
-        
         user = db.query(User).filter(User.username == credentials.username).first()
         
+        if not HashPassword.compair(credentials.password, user.password):
+            raise HTTPException(status_code=401, detail="Credenciais inválidas")
+
         if user.is_leader:
             return ResponseForLeader(id=hero.id, name=hero.name, power_level=hero.power_level, universe=hero.universe, real_identity=hero.real_identity)
         
