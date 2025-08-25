@@ -11,6 +11,15 @@ fastapi = "^0.115.6"
 uvicorn = "^0.32.1"
 sqlalchemy = "^2.0.36"
 
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "v$version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+version_files = [
+    "pyproject.toml:version"
+]
 
 [build-system]
 requires = ["poetry-core"]
