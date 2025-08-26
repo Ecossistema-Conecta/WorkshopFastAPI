@@ -10,6 +10,7 @@ python = "^3.12"
 fastapi = "^0.115.6"
 uvicorn = "^0.32.1"
 sqlalchemy = "^2.0.36"
+python-semantic-release = "^10.3.1"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -18,9 +19,15 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 changelog_file = "CHANGELOG.md"
 version_files = [
+    "src/__version__.py",
     "pyproject.toml:version"
 ]
+[tool.semantic_release]
+version_source = "tag"
+upload_to_pypi = false
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
