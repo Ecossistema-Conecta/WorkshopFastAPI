@@ -8,8 +8,6 @@ COPY pyproject.toml poetry.lock /app/
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi
 
-#RUN pip install --upgrade pip \
-#    && pip install commitizen
 
-CMD ["uvicorn", "app.main:app","bash", "pip install --upgrade pip", "pip install commitizen" "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app","bash","--host", "0.0.0.0", "--port", "8000"]
 
