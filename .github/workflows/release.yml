@@ -26,5 +26,4 @@ jobs:
             CUSTOM_DOMAIN: 'provafacildocs.github.io'
             CONFIG_FILE: './mkdocs.yml'
             EXTRA_PACKAGES: build-base
-            GITHUB_DOMAIN: 'provafacildocs.github.io'
 
