@@ -20,4 +20,11 @@ jobs:
         run: semantic-release publish
 
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            CUSTOM_DOMAIN: 'provafacildocs.github.io'
+            CONFIG_FILE: './mkdocs.yml'
+            EXTRA_PACKAGES: build-base
+            GITHUB_DOMAIN: 'provafacildocs.github.io'
+
