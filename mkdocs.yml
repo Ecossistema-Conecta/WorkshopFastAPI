@@ -1,8 +1,7 @@
 site_name: Prova
 
 nav:
-  - Home: index.md
-  - About: about.md
+  - Release Notes: CHANGELOG.md
 
 theme:
   name: 'material'
