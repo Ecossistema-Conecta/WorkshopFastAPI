@@ -7,4 +7,5 @@
 
 ### Fix
 
+- **mkdocs.yml**: Ajustado MKDocs
 - **mkdocs.yml**: Ajustada a barra de navegação do site
