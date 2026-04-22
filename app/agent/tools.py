@@ -1,6 +1,5 @@
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
-from sqlalchemy.exc import IntegrityError
 from app.services.heroes import HeroService
 from app.schemas import SuperHeroSchema
 
