@@ -3,7 +3,7 @@ from langchain.agents import create_openai_tools_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.agents import AgentExecutor
 
-from tools import tools
+from app.agent.tools import tools
 
 llm = ChatOpenAI(model_name="gpt-5-mini", temperature=0)
 

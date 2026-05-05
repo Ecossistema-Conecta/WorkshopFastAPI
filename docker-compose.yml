@@ -26,8 +26,11 @@ services:
   dashboard:
     build: .
     command: streamlit run app/streamlit_app/main.py --server.port=8501 --server.address=0.0.0.0
+    env_file:
+      - .env
     environment:
       - PYTHONPATH=/app
+      - DATABASE_URL=sqlite:///./database.db
     volumes:
       - .:/app
     ports:
