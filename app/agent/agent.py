@@ -5,7 +5,7 @@ from langchain.agents import AgentExecutor
 
 from tools import tools
 
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model_name="gpt-5-mini", temperature=0)
 
 
 prompt = ChatPromptTemplate.from_messages([
