@@ -1,4 +1,5 @@
 import streamlit as st
+from langchain_core.messages import HumanMessage, AIMessage
 
 from app.agent.agent import agent_executor
 from app.services.heroes import HeroService
@@ -59,21 +60,28 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "assistant", "content": "Olá! Como posso ajudar você hoje?"})
 
+# Inicializa histórico LangChain
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
 # Renderiza o histórico de mensagens
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
 if prompt := st.chat_input("Digite sua mensagem..."):
-    chat_history = []
     st.session_state.messages.append({"role": "user", "content": prompt})
+
+    st.session_state.chat_history.append(
+        HumanMessage(content=prompt)
+    )
 
     # Exibe a mensagem do usuário
     with st.chat_message("user"):
         st.markdown(prompt)
 
     # Repete Prompt
-    response = agent_executor.invoke({"input": prompt, "chat_history": chat_history})
+    response = agent_executor.invoke({"input": prompt, "chat_history": st.session_state.chat_history[:-1]})
     assistant_response = response["output"]
     with st.chat_message("assistant"):
         st.markdown(assistant_response)
@@ -82,4 +90,10 @@ if prompt := st.chat_input("Digite sua mensagem..."):
     st.session_state.messages.append(
         {"role": "assistant", "content": assistant_response}
     )
+
+    # Salva resposta LangChain
+    st.session_state.chat_history.append(
+        AIMessage(content=assistant_response)
+    )
+
     st.rerun()
