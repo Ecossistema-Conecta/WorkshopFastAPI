@@ -4,18 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.api.main import api_router
-from app.database import engine
-from app.models import ModelBase
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    ModelBase.metadata.create_all(engine)
-    yield
-
-
-app = FastAPI(lifespan=lifespan)
-
+app = FastAPI()
 
 @app.get("/")
 async def root():
