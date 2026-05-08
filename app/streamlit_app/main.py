@@ -31,4 +31,6 @@ if prompt := st.chat_input("Digite sua mensagem..."):
         st.markdown(assistant_response)
 
     # Salva no histórico
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.append(
+        {"role": "assistant", "content": assistant_response}
+    )
