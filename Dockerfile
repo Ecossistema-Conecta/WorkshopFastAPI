@@ -1,14 +1,18 @@
-FROM python:3.12-bullseye
+FROM python:3.14-slim
+
+RUN apt update && apt install -y --no-install-recommends curl
 
 RUN pip install --no-cache-dir poetry
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock /app/
-RUN poetry config virtualenvs.create false
-RUN poetry install --no-interaction --no-ansi --no-root
+ENV POETRY_VIRTUALENVS_CREATE=false
+
+COPY poetry.lock pyproject.toml ./
+
+# RUN poetry install --only main --no-root
+RUN poetry install
 
 COPY . /app
 
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "src/app.py"]

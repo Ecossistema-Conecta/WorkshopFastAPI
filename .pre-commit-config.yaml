@@ -1,0 +1,64 @@
+repos:
+  # Ruff — lint
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: ruff
+        language: system
+        types: [python]
+        args: ['check', '--fix']
+        stages: [pre-commit]
+        fail_fast: true
+
+  # Black — formatação automática
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: black
+        language: system
+        types: [python]
+        args: ['--skip-string-normalization']
+        stages: [pre-commit]
+        fail_fast: true
+
+  # Atualização automática do requirements.txt
+  - repo: local
+    hooks:
+      - id: requirements
+        name: requirements
+        entry: bash -c '.venv/bin/pip3 freeze > requirements.txt; git add requirements.txt; git commit --amend --no-edit'
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        fail_fast: false
+
+  # Mypy — checagem de tipos
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        types: [python]
+        stages: [pre-push]
+        fail_fast: false
+
+  # Pytest — execução dos testes
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        types: [python]
+        args:
+          [
+            '--tb=line',
+            '--testmon'
+          ]
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
+        fail_fast: false

@@ -1,30 +1,130 @@
+[project]
+name = 'fastapi-project'
+version = '0.1.0'
+description = 'Project created to study fastapi'
+authors = [
+    {name = 'Felipe',email = 'felipe.pedrosa.dev@gmail.com'}
+]
+readme = 'README.md'
+requires-python = '>=3.14,<4.0'
+dependencies = [
+    'fastapi[standard] (>=0.120.2,<0.121.0)',
+    'uvicorn[standard] (>=0.38.0,<0.39.0)',
+    'pydantic (>=2.12.5,<3.0.0)',
+    'email-validator (>=2.3.0,<3.0.0)',
+    'sqlalchemy[asyncio] (>=2.0.46,<3.0.0)',
+    "psycopg[binary] (>=3.3.3,<4.0.0)",
+    "pydantic-settings (>=2.13.1,<3.0.0)",
+    "alembic (>=1.18.4,<2.0.0)",
+    "mailersend (>=2.0.3,<3.0.0)",
+    "redis (>=7.4.0,<8.0.0)",
+    "bcrypt (>=5.0.0,<6.0.0)",
+]
+
 [tool.poetry]
-name = "baseprojectfastapi"
-version = "0.1.0"
-description = ""
-authors = ["Guilherme Lima <guilherme.pereira@provafacilnaweb.com.br>"]
-readme = "README.md"
+package-mode = false
 
-[tool.poetry.dependencies]
-python = "^3.12"
-fastapi = "^0.115.6"
-uvicorn = "^0.32.1"
-sqlalchemy = "^2.0.36"
-langchain = "^0.3.27"
-langchain-openai = "0.3.32"
-streamlit = "^1.49.1"
-
-
-[tool.poetry.group.docs.dependencies]
-mkdocs = "^1.6.1"
-mkdocs-material = "^9.6.8"
-mkdocstrings = {extras = ["python"], version = "^0.29.0"}
-mkdocs-gen-files = "^0.5.0"
-
-
-[tool.poetry.group.database.dependencies]
-alembic = "^1.15.1"
+[tool.poetry.group.dev.dependencies]
+ruff = '^0.14.4'
+black = '^25.9.0'
+mypy = '^1.18.2'
+pytest = '>=8.2,<9'
+pytest-asyncio = '^1.2.0'
+pre-commit = '^4.4.0'
+pytest-testmon = '^2.1.4'
+pytest-mock = '^3.15.1'
+pytest-cov = '^7.0.0'
+taskipy = '^1.14.1'
+testcontainers = "^4.14.1"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ['poetry-core>=2.0.0,<3.0.0']
+build-backend = 'poetry.core.masonry.api'
+
+[tool.taskipy.tasks]
+lint = 'ruff check'
+pre_format = 'ruff check --fix'
+format = 'ruff format'
+check_type = 'mypy --config-file pyproject.toml .'
+run_dev = 'fastapi dev src/main.py'
+pre_unit_test = 'task check_type && task format'
+unit_test = 'pytest -s -x -m unit'
+test_cov = 'pytest -s -x --cov=src -vv coverage html'
+
+[tool.black]
+skip-string-normalization = true
+line-length = 130
+target-version = ['py312']
+verbose = false
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+preview = true
+lint.select = ['E', 'F', 'I', 'W', 'PL', 'PT']
+lint.fixable = ['ALL']
+exclude = ['.git', '.mypy_cache', '.ruff_cache', 'migrations']
+line-length = 130
+
+[tool.ruff.lint.pylint]
+max-args = 7
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.mypy]
+python_version = '3.13'
+mypy_path = "'./src'"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_any_unimported = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = false
+explicit_package_bases = true
+ignore_missing_imports = true
+no_implicit_optional = true
+strict_equality = true
+show_error_codes = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+exclude = ['test/', 'db/']
+
+[tool.pytest.ini_options]
+addopts = '--strict-markers -p no:warnings'
+python_files = ['*_test.py']
+python_classes = ['Test*']
+python_functions = ['test_*']
+testpaths = 'tests'
+pythonpath = ['.', 'src']
+markers = [
+    'unit',
+    'integration',
+]
+
+[tool.coverage.run]
+concurrency = ['thread', 'greenlet']
+
+[tool.basedpyright]
+reportMissingTypeStubs = false
+reportImplicitOverride = false
+reportDeprecated = false
+reportUnusedCallResult = false
+reportAny = false
+reportExplicitAny = false

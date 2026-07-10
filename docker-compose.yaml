@@ -1,0 +1,41 @@
+services:
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - .env
+    command: sh -c "alembic upgrade head && python -m src.app"
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:8000/" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 3
+#      start_period: 5s
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:18
+    restart: always
+    container_name: fastapi_db
+    env_file:
+      - .env
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./db:/var/lib/postgresql
+    
+  redis:
+    image: redis:8.6-alpine
+    restart: always
+    container_name: fastapi_redis
+    env_file:
+      - .env
+    ports:
+    - "6379:6379"

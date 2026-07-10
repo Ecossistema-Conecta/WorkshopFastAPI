@@ -64,7 +64,6 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-*.db
 
 # Flask stuff:
 instance/
@@ -175,3 +174,15 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# Generated using ignr.py - github.com/Antrikshy/ignr.py
+
+# pyenv
+.python-version
+
+# IDE
+.vscode
+.idea
+
+# database
+db/
