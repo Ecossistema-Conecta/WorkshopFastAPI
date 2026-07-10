@@ -1,0 +1,106 @@
+@startuml
+title CreateUser flow - Class diagram
+skinparam classAttributeIconSize 0
+interface IController
+interface ICreateUserUseCase
+interface ISendNewUserEmailUseCase
+interface IUserRepository
+interface IHasher
+interface IMailerAdapter
+interface IEmailLogRepository
+interface IRedisRepository
+class CreateUserModel <<model>> {
+  +name: str
+  +email: EmailStr
+  +password: str
+}
+class UserModel <<model>> {
+  +id
+  +name: str
+  +email: EmailStr
+  +is_superuser: bool
+}
+class EmailLogResponseModel <<model>> {
+  +success: bool
+  +log_id
+  +status_code
+  +error_message
+  +retry_after
+}
+class HttpRequest <<type>> {
+  +method: str
+  +body: dict
+}
+class HttpResponse <<type>> {
+  +body
+  +status_code
+}
+class Helpers <<helper>> {
+  +created(): HttpResponse
+}
+class CreateUserController <<controller>> {
+  +handle(http_request: HttpRequest): HttpResponse
+}
+class CreateUserUseCase <<usecase>> {
+  +execute(user: CreateUserModel): tuple[str, UserModel]
+}
+class SendNewUserEmailUseCase <<usecase>> {
+  +execute(temp_password: str, user: UserModel): EmailLogResponseModel
+  +send_new_user_email(...)
+  +calc_expires()
+  +get_first_access_email(temp_password: str)
+}
+class UserRepository <<repository>>
+class HasherAdapter <<adapter>>
+class MailerAdapter <<adapter>>
+class EmailLogRepository <<repository>>
+class RedisRepository <<repository>>
+CreateUserUseCase ..|> ICreateUserUseCase
+SendNewUserEmailUseCase ..|> ISendNewUserEmailUseCase
+CreateUserController ..|> IController
+UserRepository ..|> IUserRepository
+HasherAdapter ..|> IHasher
+MailerAdapter ..|> IMailerAdapter
+EmailLogRepository ..|> IEmailLogRepository
+RedisRepository ..|> IRedisRepository
+CreateUserController ..> ICreateUserUseCase : depends on (injected)
+CreateUserController ..> ISendNewUserEmailUseCase : depends on (injected)
+CreateUserController ..> HttpRequest
+CreateUserController ..> HttpResponse
+CreateUserController ..> Helpers : uses(created)
+CreateUserUseCase ..> IUserRepository : uses
+CreateUserUseCase ..> IHasher : uses
+CreateUserUseCase ..> CreateUserModel
+CreateUserUseCase ..> UserModel
+SendNewUserEmailUseCase ..> IMailerAdapter : uses
+SendNewUserEmailUseCase ..> IEmailLogRepository : uses
+SendNewUserEmailUseCase ..> IRedisRepository : uses
+SendNewUserEmailUseCase ..> UserModel
+SendNewUserEmailUseCase ..> EmailLogResponseModel
+UserRepository ..> IUserRepository : concrete impl
+HasherAdapter ..> IHasher : concrete impl
+MailerAdapter ..> IMailerAdapter : concrete impl
+EmailLogRepository ..> IEmailLogRepository : concrete impl
+RedisRepository ..> IRedisRepository : concrete impl
+note right of CreateUserController
+  src/user/presentation/controllers/create_user_controller.py
+end note
+note right of CreateUserUseCase
+  src/user/application/use_case/user/create_user_use_case.py
+end note
+note right of SendNewUserEmailUseCase
+  src/user/application/use_case/user/send_new_user_email_use_case.py
+end note
+note right of CreateUserModel
+  src/user/domain/models/user.py (CreateUserModel)
+end note
+note right of UserModel
+  src/user/domain/models/user.py (UserModel)
+end note
+note right of HttpRequest
+  src/common/presentation/http_types/http_request.py
+end note
+note right of HttpResponse
+  src/common/presentation/http_types/http_response.py
+end note
+@enduml
