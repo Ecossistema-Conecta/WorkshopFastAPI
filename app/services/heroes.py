@@ -50,7 +50,8 @@ class HeroService:
 
         hero_data = update_data.model_dump(exclude_unset=True)
         for key, value in hero_data.items():
-            setattr(hero, key, value)
+            if value is not None:
+                setattr(hero, key, value)
 
         self.db.commit()
         self.db.refresh(hero)
