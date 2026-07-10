@@ -10,3 +10,6 @@ def ok(data: Any | None = None) -> HttpResponse:
 
 def created() -> HttpResponse:
     return HttpResponse(status_code=HTTPStatus.CREATED, body=None)
+
+def too_many_requests(body: Any) -> HttpResponse:
+    return HttpResponse(status_code=HTTPStatus.TOO_MANY_REQUESTS, body=body)
